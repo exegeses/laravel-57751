@@ -26,3 +26,9 @@ Route::get('/prueba', function ()
 {
     return view('test');
 });
+
+// plantilla
+Route::get('/inicio', function ()
+{
+    return view('inicio');
+});
