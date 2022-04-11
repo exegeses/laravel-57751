@@ -45,3 +45,19 @@ Route::get('/regiones', function () {
 
     return view('regiones', [ 'regiones'=>$regiones ]);
 });
+
+##### CRUD de destinos
+Route::get('/destinos', function ()
+{
+    //raw sql
+    /*$destinos = DB::select('
+                        SELECT destinos.*, regiones.regNombre
+                            FROM regiones, destinos
+                            WHERE regiones.idRegion = destinos.idRegion');*/
+    // query Builder
+    $destinos = DB::table('destinos as d')
+            ->join('regiones as r','d.idRegion','=','r.idRegion')
+            ->select('d.*','r.regNombre')
+            ->get();
+    return view('destinos', [ 'destinos' => $destinos ] );
+});
