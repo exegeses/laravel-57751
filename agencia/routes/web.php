@@ -45,6 +45,27 @@ Route::get('/regiones', function () {
 
     return view('regiones', [ 'regiones'=>$regiones ]);
 });
+Route::get('/region/create', function ()
+{
+    return view('regionCreate');
+});
+Route::post('/region/store', function ()
+{
+    $regNombre = request()->regNombre;
+    //insertamos en tabla regiones
+    /*DB::insert(
+                'INSERT INTO regiones
+                            ( regNombre )
+                        VALUE
+                            ( :regNombre )',
+                [ $regNombre ]
+            );*/
+    DB::table('regiones')
+            ->insert([ 'regNombre'=>$regNombre ]);
+
+    return redirect('/regiones')
+                ->with(['mensaje'=>'Región '.$regNombre.' agregada correctamente']);
+});
 
 ##### CRUD de destinos
 Route::get('/destinos', function ()
