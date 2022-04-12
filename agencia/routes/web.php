@@ -66,6 +66,34 @@ Route::post('/region/store', function ()
     return redirect('/regiones')
                 ->with(['mensaje'=>'Región '.$regNombre.' agregada correctamente']);
 });
+Route::get('/region/edit/{id}', function ($id)
+{
+    //obtenemos datos de la región por su ID
+    /*$region = DB::select('SELECT idRegion, regNombre
+                            FROM regiones
+                            WHERE idRegion = :idRegion',
+                        [ $id ]);*/
+    $region = DB::table('regiones')
+                    ->where( 'idRegion', $id )
+                    ->first(); //fetch
+    //retornamos vista del formulario con sus datos cargados
+    return view('regionEdit', [ 'region' => $region ]);
+});
+Route::post('/region/update', function ()
+{
+    $idRegion  = request()->idRegion;
+    $regNombre = request()->regNombre;
+    /*DB::update( 'UPDATE regiones
+                    SET
+                        regNombre = :regNombre
+                    WHERE idRegion = :idRegion',
+                [ $regNombre, $idRegion ]);*/
+    DB::table('regiones')
+        ->where( 'idRegion', $idRegion )
+        ->update( [ 'regNombre'=>$regNombre ] );
+    return redirect('/regiones')
+        ->with(['mensaje'=>'Región '.$regNombre.' modificada correctamente']);
+});
 
 ##### CRUD de destinos
 Route::get('/destinos', function ()
