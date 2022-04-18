@@ -16,7 +16,7 @@
             </a>
         </div>
         <div class="col text-end">
-            <a href="/region/create" class="btn btn-outline-secondary">
+            <a href="/destino/create" class="btn btn-outline-secondary">
                 <i class="bi bi-plus-square"></i>
                 Agregar
             </a>

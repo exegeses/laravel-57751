@@ -110,3 +110,31 @@ Route::get('/destinos', function ()
             ->get();
     return view('destinos', [ 'destinos' => $destinos ] );
 });
+Route::get('/destino/create', function ()
+{
+    $regiones = DB::table('regiones')
+                    ->select('idRegion','regNombre')
+                    ->get();
+    return view('destinoCreate', [ 'regiones' => $regiones ]);
+});
+Route::post('/destino/create', function ()
+{
+    $destNombre = request()->destNombre;
+    $idRegion = request()->idRegion;
+    $destPrecio = request()->destPrecio;
+    $destAsientos = request()->destAsientos;
+    $destDisponibles = request()->destDisponibles;
+    //$destActivo = request()->destActivo;
+    DB::table('destinos')
+        ->insert([
+                'destNombre'=>$destNombre,
+                'idRegion'=>$idRegion,
+                'destPrecio'=>$destPrecio,
+                'destAsientos'=>$destAsientos,
+                'destDisponibles'=>$destDisponibles
+                /*'destActivo'=>$destActivo*/
+            ]);
+
+    return redirect('/destinos')
+        ->with( [ 'mensaje'=>'Destino '.$destNombre.' agregado correctamente' ]);
+});
