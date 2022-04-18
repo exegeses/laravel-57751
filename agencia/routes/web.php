@@ -117,7 +117,7 @@ Route::get('/destino/create', function ()
                     ->get();
     return view('destinoCreate', [ 'regiones' => $regiones ]);
 });
-Route::post('/destino/create', function ()
+Route::post('/destino/store', function ()
 {
     $destNombre = request()->destNombre;
     $idRegion = request()->idRegion;

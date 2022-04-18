@@ -5,7 +5,7 @@
 
     <div class="alert bg-light border border-white shadow round col-8 mx-auto p-4">
 
-        <form action="/destino/create" method="post">
+        <form action="/destino/store" method="post">
         @csrf
             <div class="form-group mb-2">
                 <label for="destNombre">Nombre del Destino:</label>
