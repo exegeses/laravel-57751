@@ -182,3 +182,24 @@ Route::post('/destino/update', function ()
     return redirect('/destinos')
             ->with(['mensaje'=>'Destino '.$destNombre.' modificado correctamente']);
 });
+Route::get('/destino/delete/{id}', function ( $id )
+{
+   $destino = DB::table('destinos as d')
+               ->join('regiones as r','d.idRegion','=','r.idRegion')
+               ->select('d.*','r.*')
+               ->where( 'd.idDestino', $id )
+               ->first();
+
+    return view('/destinoDelete', [ 'destino' => $destino ]);
+});
+Route::post('/destino/destroy', function ()
+{
+    $idDestino = request()->idDestino;
+    $destNombre = request()->destNombre;
+    DB::table('destinos')
+        ->where( 'idDestino', $idDestino )
+        ->delete();
+    return redirect('/destinos')
+        ->with(['mensaje'=>'Destino '.$destNombre.' eliminado correctamente']);
+
+});
