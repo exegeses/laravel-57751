@@ -138,3 +138,47 @@ Route::post('/destino/store', function ()
     return redirect('/destinos')
         ->with( [ 'mensaje'=>'Destino '.$destNombre.' agregado correctamente' ]);
 });
+Route::get('/destino/edit/{id}', function ( $id )
+{
+    //traigo las regiones
+    $regiones = DB::table('regiones')
+                        ->get();
+    //traigo el destino por id
+    $destino = DB::table('destinos as d')
+            ->join('regiones as r','d.idRegion','=','r.idRegion')
+            ->select('d.*','r.*')
+            ->where( 'd.idDestino', $id )
+            ->first();
+
+    //muestro la vista editar destino
+    return view('destinoEdit',
+                    [
+                        'regiones' => $regiones,
+                        'destino'=>$destino
+                    ]
+                );
+});
+Route::post('/destino/update', function ()
+{
+    $idDestino = request()->idDestino;
+    $destNombre = request()->destNombre;
+    $idRegion = request()->idRegion;
+    $destPrecio = request()->destPrecio;
+    $destAsientos = request()->destAsientos;
+    $destDisponibles = request()->destDisponibles;
+
+    DB::table('destinos')
+        ->where( 'idDestino', $idDestino )
+        ->update(
+            [
+                'destNombre' => $destNombre,
+                'idRegion' => $idRegion,
+                'destPrecio' => $destPrecio,
+                'destAsientos' => $destAsientos,
+                'destDisponibles' => $destDisponibles
+            ]
+        );
+
+    return redirect('/destinos')
+            ->with(['mensaje'=>'Destino '.$destNombre.' modificado correctamente']);
+});
