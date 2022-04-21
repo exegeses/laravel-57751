@@ -79,3 +79,41 @@ LaraJobs <https://larajobs.com/>
 
 ----
 
+
+## Actualizar desde un proyecto existente
+
+>Primero hay que descargar el proyecto existente usando git   
+>preferntemente.   
+>Sino, descargar los archivos de manera tradicional.
+
+> Cuando se descarga de este modo, NO DESCARGA TODO EL PROYECTO.  
+> NO descarga por ejemplo el directorio "vendor"
+
+> El comando para clonar todo un proyecto desde git es:
+
+    git clone direccion
+
+> Ejemplo:
+
+    git clone https://github.com/exegeses/laravel-57751.git
+
+
+> Una vez descargado, vamos a obtener los componetes necesorios para que funcione el framework  
+> El comando necesario es "composer update" en el proyecto.  
+> No olvidemos primero posicionarnos dentro del directorio del proyecto.
+
+    cd catalogo  
+    composer update  
+
+
+> Cuando haya terminado de descargar y querramos iniciar el proyecto, va a parecer que esta todo funcionando bien, pero aun falta algo.  
+> Al intentar editar el archivo de configuración  ".env" nos damos cuenta que no está- sin embargo, hay un archivo. ".env.example"  
+> Entonces vamos a generar nuetro archivo ".env" renombrando o compiando este archivo.
+
+> Ahora si, el último paso es genear la key del proyecto.  
+> Esto se logra con el comando
+
+    php artisan key:generate
+
+> Ahora ya tenemos nuestro proyecto base listo
+> enjoy coding!
