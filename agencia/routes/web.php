@@ -125,6 +125,14 @@ Route::post('/destino/store', function ()
     $destAsientos = request()->destAsientos;
     $destDisponibles = request()->destDisponibles;
     //$destActivo = request()->destActivo;
+    /* raw SQL
+     * DB::insert(
+            'INSERT INTO destinos
+                ( destNombre, regID, destPrecio, destAsientos, destDisponibles )
+               VALUE
+                ( :destNombre, :regID, :destPrecio, :destAsientos, :destDisponibles )',
+                [ $destNombre, $regID, $destPrecio, $destAsientos, $destDisponibles ]
+    );*/
     DB::table('destinos')
         ->insert([
                 'destNombre'=>$destNombre,
@@ -196,6 +204,8 @@ Route::post('/destino/destroy', function ()
 {
     $idDestino = request()->idDestino;
     $destNombre = request()->destNombre;
+    //DB::delete('DELETE FROM regiones
+    //              WHERE regID = :regID', [ $regID ]);
     DB::table('destinos')
         ->where( 'idDestino', $idDestino )
         ->delete();
