@@ -5,10 +5,11 @@
 
     <div class="alert bg-light p-4 col-8 mx-auto shadow">
         <form action="/marca/store" method="post">
-
+        @csrf
             <div class="form-group">
                 <label for="mkNombre">Nombre de la marca</label>
                 <input type="text" name="mkNombre"
+                       value="{{ old('mkNombre') }}"
                        class="form-control" id="mkNombre">
             </div>
 
@@ -18,5 +19,15 @@
             </a>
         </form>
     </div>
+
+   @if( $errors->any() )
+       <div class="alert alert-danger col-8 mx-auto">
+           <ul>
+           @foreach( $errors->all() as $error )
+               <li>{{ $error }}</li>
+           @endforeach
+           </ul>
+       </div>
+   @endif
 
 @endsection
