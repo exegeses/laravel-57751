@@ -25,23 +25,25 @@
 
 
     <ul class="list-group">
-
+    @foreach( $categorias as $categoria )
         <li class="col-md-6 list-group-item list-group-item-action d-flex justify-content-between">
             <div class="col">
-                <span class="fs-4">Nombre categoria</span>
+                <span class="fs-4">{{ $categoria->catNombre }}</span>
             </div>
             <div class="col text-end btn-group">
-                <a href="/categoria/edit/id" class="btn btn-outline-secondary me-1">
+                <a href="/categoria/edit/{{ $categoria->idCategoria }}" class="btn btn-outline-secondary me-1">
                     <i class="bi bi-pencil-square"></i>
                     Modificar
                 </a>
-                <a href="/categoria/delete/id" class="btn btn-outline-secondary me-1">
+                <a href="/categoria/delete/{{ $categoria->idCategoria }}" class="btn btn-outline-secondary me-1">
                     <i class="bi bi-trash"></i>
                     &nbsp;Eliminar&nbsp;
                 </a>
             </div>
         </li>
-
+    @endforeach
     </ul>
+
+    {{ $categorias->links() }}
 
 @endsection

@@ -14,7 +14,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::paginate(7);
+        return view('categorias', [ 'categorias' => $categorias ]);
     }
 
     /**
@@ -24,7 +25,21 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categoriaCreate');
+    }
+
+    private function validarForm( Request $request )
+    {
+        $request->validate(
+            [
+                'catNombre'=>'required|min:2|max:30'
+            ],
+            [
+                'catNombre.required' => 'El campo "Nombre de la categoría" es obligatorio.',
+                'catNombre.min' => 'El campo "Nombre de la categoría" debe tener 2 caractéres como mínimo.',
+                'catNombre.max' => 'El campo "Nombre de la categoría" no puede superar los 30 caractéres.'
+            ]
+        );
     }
 
     /**
@@ -35,7 +50,20 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //capturar envio del form
+        $catNombre = $request->catNombre;
+        //validar
+        $this->validarForm( $request );
+        //instanciar & asignar atributo
+        $Categoria = new Categoria;
+        $Categoria->catNombre = $catNombre;
+        //guardar en tabla
+        $Categoria->save();
+        //retorna a peticion con mensaje ok
+        return redirect('/categorias')
+            ->with(
+                ['mensaje'=>'Categoría: '.$catNombre. ' agregada correctamente.']
+            );
     }
 
     /**
