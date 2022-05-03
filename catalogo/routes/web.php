@@ -25,3 +25,8 @@ use App\Http\Controllers\CategoriaController;
 Route::get('/categorias', [ CategoriaController::class, 'index' ]);
 Route::get('/categoria/create', [ CategoriaController::class, 'create' ]);
 Route::post('/categoria/store', [ CategoriaController::class, 'store' ]);
+
+########   crud de productos  #######
+use App\Http\Controllers\ProductoController;
+
+Route::get('/productos', [ ProductoController::class, 'index' ]);
