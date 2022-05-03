@@ -16,6 +16,8 @@ Route::get('/marca/create', [ MarcaController::class, 'create' ]);
 Route::post('/marca/store', [ MarcaController::class, 'store' ]);
 Route::get('/marca/edit/{id}', [ MarcaController::class, 'edit' ]);
 Route::patch('/marca/update', [ MarcaController::class, 'update' ]);
+Route::get('/marca/delete/{id}', [ MarcaController::class, 'confirm' ] );
+Route::delete('/marca/destroy', [ MarcaController::class, 'destroy' ] );
 
 ########   crud de categorías  #######
 use App\Http\Controllers\CategoriaController;
