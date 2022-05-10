@@ -42,6 +42,7 @@ main{
     .alert ul li{
         list-style-type: none;
         margin-bottom: -16px;
+        margin-top: 12px;
     }
     .alert ul li i{
         margin-right: 12px;

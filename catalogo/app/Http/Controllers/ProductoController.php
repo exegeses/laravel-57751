@@ -41,15 +41,15 @@ class ProductoController extends Controller
     private function validarForm( Request $request )
     {
         $request->validate(
-                [
-                    'prdNombre' => 'required|min:2|max:30',
-                    'prdPrecio' => 'required|numeric|min:0',
-                    'idMarca' => 'required|integer',
-                    'idCategoria' => 'required|integer',
-                    'prdDescripcion' => 'required|min:2|max:150',
-                    'prdStock' => 'required|integer|min:0',
-                    'prdImagen' => 'mimes:jpg,jpeg,png,gif,svg,webp|max:2048'
-                ],
+            [
+                'prdNombre' => 'required|min:2|max:30',
+                'prdPrecio' => 'required|numeric|min:0',
+                'idMarca' => 'required|integer',
+                'idCategoria' => 'required|integer',
+                'prdDescripcion' => 'required|min:2|max:150',
+                'prdStock' => 'required|integer|min:0',
+                'prdImagen' => 'mimes:jpg,jpeg,png,gif,svg,webp|max:2048'
+            ],
             [
                 'prdNombre.required'=>'El campo "Nombre del producto" es obligatorio.',
                 'prdNombre.min'=>'El campo "Nombre del producto" debe tener como mínimo 2 caractéres.',
@@ -63,7 +63,7 @@ class ProductoController extends Controller
                 'idCategoria.integer'=>'Seleccione una categoría.',
                 'prdDescripcion.required'=>'Complete el campo Descripción.',
                 'prdDescripcion.min'=>'Complete el campo Descripción con al menos 3 caractéres',
-                'prdDescripcion.max'=>'Complete el campo Descripción con 150 caractérescomo máxino.',
+                'prdDescripcion.max'=>'Complete el campo Descripción con 150 caractéres como máxino.',
                 'prdStock.required'=>'Complete el campo Stock.',
                 'prdStock.integer'=>'Complete el campo Stock con un número entero.',
                 'prdStock.min'=>'Complete el campo Stock con un número positivo.',
@@ -71,6 +71,23 @@ class ProductoController extends Controller
                 'prdImagen.max'=>'Debe ser una imagen de 2MB como máximo.'
             ]
         );
+    }
+
+    private function subirImagen( Request $request )
+    {
+        //si no enviaron imagen 'noDisponible.png'
+        $prdImagen = 'noDisponible.png';
+
+        // si ENVIARON un imagen
+        if( $request->file('prdImagen') ){
+            //renombramos archivo
+            $extension = $request->file('prdImagen')->extension();
+            $prdImagen = time().'.'.$extension;
+            //subir archivo
+            $request->file('prdImagen')
+                    ->move( public_path('imagenes/productos/'), $prdImagen );
+        }
+        return $prdImagen;
     }
 
     /**
@@ -84,9 +101,11 @@ class ProductoController extends Controller
         //validamos
         $this->validarForm($request);
         //subir imagen*
+        $prdImagen = $this->subirImagen($request);
         //instanciamos
         //asignamos atributos
         //guardamos
+        dd($prdImagen);
     }
 
     /**
