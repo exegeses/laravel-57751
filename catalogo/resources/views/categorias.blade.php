@@ -4,7 +4,7 @@
     <h1>Panel de administración de categorías</h1>
 
     @if( session('mensaje') )
-        <div class="alert alert-success">
+        <div class="alert alert-{{ session('warning') ? 'warning':'success' }}">
             {{ session('mensaje') }}
         </div>
     @endif

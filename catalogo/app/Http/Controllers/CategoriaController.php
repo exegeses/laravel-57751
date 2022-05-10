@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -83,9 +84,10 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categoria $categoria)
+    public function edit( $id )
     {
-        //
+        $Categoria = Categoria::find($id);
+        return view('categoriaEdit', [ 'Categoria'=>$Categoria ]);
     }
 
     /**
@@ -95,19 +97,57 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request)
     {
-        //
+        $catNombre = $request->catNombre;
+        //validacion
+        $this->validarForm($request);
+        //obtenemos datos de la categoría
+        $Categoria = Categoria::find($request->idCategoria);
+        $Categoria->catNombre = $catNombre;
+        $Categoria->save();
+        return redirect('/categorias')
+            ->with(
+                ['mensaje'=>'Categoría: '.$catNombre. ' modificada correctamente.']
+            );
     }
 
+    private function productoPorCategoria( $idCategoria )
+    {
+        //$check = Producto::where('idCategoria', $idCategoria)->first();
+        $check = Producto::firstWhere('idCategoria', $idCategoria);
+        //$check = Producto::where('idCategoria', $idCategoria)->count();
+        return $check;
+    }
+
+    public function confirm($id)
+    {
+        $Categoria = Categoria::find($id);
+        if( !$this->productoPorCategoria($id) )
+        {
+            //retornamos vista de confirmación
+            return view('categoriaDelete', [ 'Categoria'=>$Categoria ]);
+        }
+        //redirección con mensaje que no se puede eliminar
+        return redirect('/categorias')
+            ->with(
+                [
+                    'warning'=>'warning',
+                    'mensaje'=>'No se puede eliminar la categoría: '.$Categoria->catNombre.' ya que tiene productos relacionados.'
+                ]);
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy( Request $request )
     {
-        //
+        Categoria::destroy($request->idCategoria);
+        return redirect('/categorias')
+            ->with(
+                ['mensaje'=>'Categoría: '.$request->catNombre. ' eliminada correctamente.']
+            );
     }
 }
