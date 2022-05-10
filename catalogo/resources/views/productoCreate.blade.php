@@ -49,13 +49,6 @@
                           id="prdDescripcion">{{ old('prdDescripcion') }}</textarea>
             </div>
 
-            <div class="form-group mb-4">
-                <label for="prdStock">Stock del Producto</label>
-                <input type="number" name="prdStock"
-                       value="{{ old('prdStock')}}"
-                       class="form-control" id="prdStock" min="0">
-            </div>
-
             <div class="custom-file mt-1 mb-4">
                 <input type="file" name="prdImagen"  class="custom-file-input" id="customFileLang" lang="es">
                 <label class="custom-file-label" for="customFileLang" data-browse="Buscar en disco">Seleccionar Archivo: </label>

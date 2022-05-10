@@ -47,7 +47,6 @@ class ProductoController extends Controller
                 'idMarca' => 'required|integer',
                 'idCategoria' => 'required|integer',
                 'prdDescripcion' => 'required|min:2|max:150',
-                'prdStock' => 'required|integer|min:0',
                 'prdImagen' => 'mimes:jpg,jpeg,png,gif,svg,webp|max:2048'
             ],
             [
@@ -64,9 +63,6 @@ class ProductoController extends Controller
                 'prdDescripcion.required'=>'Complete el campo Descripción.',
                 'prdDescripcion.min'=>'Complete el campo Descripción con al menos 3 caractéres',
                 'prdDescripcion.max'=>'Complete el campo Descripción con 150 caractéres como máxino.',
-                'prdStock.required'=>'Complete el campo Stock.',
-                'prdStock.integer'=>'Complete el campo Stock con un número entero.',
-                'prdStock.min'=>'Complete el campo Stock con un número positivo.',
                 'prdImagen.mimes'=>'Debe ser una imagen.',
                 'prdImagen.max'=>'Debe ser una imagen de 2MB como máximo.'
             ]
@@ -103,9 +99,20 @@ class ProductoController extends Controller
         //subir imagen*
         $prdImagen = $this->subirImagen($request);
         //instanciamos
+        $Producto = new Producto;
         //asignamos atributos
+        $Producto->prdNombre = $request->prdNombre;
+        $Producto->prdPrecio = $request->prdPrecio;
+        $Producto->idMarca = $request->idMarca;
+        $Producto->idCategoria = $request->idCategoria;
+        $Producto->prdDescripcion = $request->prdDescripcion;
+        $Producto->prdImagen = $prdImagen;
+        $Producto->prdActivo = 1;
         //guardamos
-        dd($prdImagen);
+        $Producto->save();
+
+        return redirect('/productos')
+            ->with( [ 'mensaje'=>'Producto: '.$request->prdNombre.' agregado correctamente.' ] );
     }
 
     /**
