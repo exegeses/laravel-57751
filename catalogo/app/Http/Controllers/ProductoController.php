@@ -181,7 +181,13 @@ class ProductoController extends Controller
         //redirección + mensaje ok
         return redirect('/productos')
             ->with( [ 'mensaje'=>'Producto: '.$request->prdNombre.' modificado correctamente.' ] );
+    }
 
+    public function confirm( $id )
+    {
+        $Producto = Producto::with(['getMarca', 'getCategoria'])
+                            ->find($id);
+        return view('productoDelete', [ 'Producto'=>$Producto ]);
     }
 
     /**
@@ -190,8 +196,11 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy( Request $request )
     {
-        //
+        Producto::destroy( $request->idProducto );
+        //redirección + mensaje ok
+        return redirect('/productos')
+            ->with( [ 'mensaje'=>'Producto: '.$request->prdNombre.' eliminado correctamente.' ] );
     }
 }
