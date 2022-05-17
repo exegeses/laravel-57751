@@ -38,11 +38,11 @@
             </p>
         </div>
         <div class="col-1 d-grid d-md-block">
-            <a href="" class="btn btn-outline-secondary me-1">
+            <a href="/producto/edit/{{ $producto->idProducto }}" class="btn btn-outline-secondary me-1">
                 <i class="bi bi-pencil-square"></i>
                 Modificar
             </a>
-            <a href="" class="btn btn-outline-secondary me-1">
+            <a href="/producto/delete/{{ $producto->idProducto }}" class="btn btn-outline-secondary me-1">
                 <i class="bi bi-trash"></i>
                 &nbsp;Eliminar&nbsp;
             </a>
