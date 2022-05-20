@@ -21,4 +21,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/marcas', function ()
+{
+    return view('marcas');
+})->middleware(['auth'])->name('marcas');
+Route::get('/categorias', function ()
+{
+    return view('categorias');
+})->middleware(['auth'])->name('categorias');
+Route::get('/productos', function ()
+{
+    return view('productos');
+})->middleware(['auth'])->name('productos');
+
+
 require __DIR__.'/auth.php';
