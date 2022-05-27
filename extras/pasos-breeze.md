@@ -10,10 +10,10 @@
 
     crear un controller MarcaController
 
-*    php artisan make:model Marca
-     php artisan make:migration create_marcas_table
-     php artisan make:seeder MarcaSeeder
-*    php artisan make:controller MarcaController -r
+*    php artisan make:model Marca  
+     php artisan make:migration create_marcas_table  
+     php artisan make:seeder MarcaSeeder  
+*    php artisan make:controller MarcaController -r  
 
     php artisan make:model Marca -mcrs
     
