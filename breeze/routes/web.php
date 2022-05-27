@@ -31,17 +31,23 @@ Route::get('/marca/edit/{id}', [ MarcaController::class, 'edit' ])
         ->middleware(['auth']);
 
 ####### CRUD de categorías
-
-
-Route::get('/categorias', function ()
+use App\Http\Controllers\CategoriaController;
+Route::controller( CategoriaController::class )->group(function ()
 {
-    return view('categorias');
-})->middleware(['auth'])->name('categorias');
+    Route::get('/categorias', 'index')
+                ->middleware(['auth'])->name('categorias');
+    Route::get('/categoria/create', 'create')
+                ->middleware(['auth']);
+    Route::get('/categoria/edit/{id}', 'edit')
+                ->middleware(['auth']);
+});
 
-Route::get('/productos', function ()
-{
-    return view('productos');
-})->middleware(['auth'])->name('productos');
+
+
+####### CRUD de productos
+use App\Http\Controllers\ProductoController;
+Route::get('/productos', [ ProductoController::class, 'index' ] )
+        ->middleware(['auth'])->name('productos');
 
 
 require __DIR__.'/auth.php';
