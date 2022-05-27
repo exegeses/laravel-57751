@@ -14,7 +14,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = Marca::paginate(10);
+        return view('marcas', [ 'marcas'=>$marcas ]);
     }
 
     /**
@@ -24,7 +25,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        return view('marcaCreate');
     }
 
     /**
@@ -55,9 +56,10 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function edit(Marca $marca)
+    public function edit( $id )
     {
-        //
+        $Marca = Marca::find($id);
+        return view('marcaEdit', [ 'Marca'=>$Marca ]);
     }
 
     /**
